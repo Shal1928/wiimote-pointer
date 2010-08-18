@@ -1,0 +1,136 @@
+#!/usr/bin/env python
+#coding: utf-8 -*-
+
+# Copyright (C) 2010 Ángel Torrado Carvajal
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+# 02111-1307, USA.
+#
+# Authors : Ángel Torrado Carvajal <a.torrado@alumnos.urjc.es>
+
+#
+# @author:       Ángel Torrado Carvajal
+# @organization: Universidad Rey Juan Carlos
+# @copyright:    Ángel Torrado Carvajal (Madrid, Spain)
+# @license:      GNU GPL version 2 or any later version
+# @contact:      a.torrado@alumnos.urjc.es
+#
+
+
+
+from GUI import *
+from Wiinux.WiimoteConnect import *
+from Wiinux.Config import mapped
+
+class App():
+
+	def __init__(self):
+		self.__gui_thread = None
+		self.__con_thread = None
+
+	def run(self):
+		# Launch the GUI
+		self.__gui_thread = GUI(self)
+		self.__gui_thread.start()
+		gtk.main()
+
+
+
+	# Start a connection
+	def notify_start_connection(self, options, geometry):
+		self.__con_thread = WiimoteConnect(self, geometry)
+		self.write_options(options)
+		self.__con_thread.start()
+
+	# Set progress
+	def notify_progress(self, progress):
+		self.__gui_thread.set_progress(progress)
+
+	# Connection complete
+	def notify_end_connection(self):
+		self.__gui_thread.end_connection_dialog()
+
+	# Finish a connection
+	def notify_finish_connection(self):
+		self.__con_thread.stop()
+
+	# Write options
+	def write_options(self, options):
+		self.options = options
+		for i in range(len(options)):
+			if self.options[i] == "Up key":
+				self.options[i] = "Up"
+			if self.options[i] == "Right key":
+				self.options[i] = "Right"		
+			if self.options[i] == "Down key":
+				self.options[i] = "Down"
+			if self.options[i] == "Left key":
+				self.options[i] = "Left"
+			if self.options[i] == "Plus key":
+				self.options[i] = "plus"
+			if self.options[i] == "Minus key":
+				self.options[i] = "minus"
+			if self.options[i] == "Escape":
+				self.options[i] = "Escape"
+			if self.options[i] == "Page Up":
+				self.options[i] = "Page_Up"
+			if self.options[i] == "Page Down":
+				self.options[i] = "Page_Down"
+			if self.options[i] == "Left Button":
+				self.options[i] = "1"
+			if self.options[i] == "Right Button":
+				self.options[i] = "3"
+			if self.options[i] == "Center Button":
+				self.options[i] = "2"
+
+		mapped['U'] = self.options[0]
+		mapped['R'] = self.options[1]
+		mapped['D'] = self.options[2]
+		mapped['L'] = self.options[3]
+		mapped['A'] = self.options[4]
+		mapped['B'] = self.options[5]
+		mapped['+'] = self.options[6]
+		mapped['-'] = self.options[7]
+		mapped['H'] = self.options[8]
+		mapped['1'] = self.options[9]
+		mapped['2'] = self.options[10]
+
+	def notify_sensors(self, x_angle, y_angle, z_angle, x_pos, y_pos):
+		self.__gui_thread.replot(x_angle, y_angle, z_angle, x_pos, y_pos)
+
+
+
+
+	# Error notifications
+	def notify_no_wiimote(self):
+		self.__gui_thread.end_connection_dialog()
+		self.__gui_thread.open_disconnect_aux()
+		self.__gui_thread.no_wiimote_dialog()
+
+	def notify_wiimote_interruption(self):
+		self.__gui_thread.open_disconnect_aux()
+		self.__gui_thread.wiimote_interruption_dialog()
+
+	def notify_bluetooth_error(self):
+		self.__gui_thread.end_connection_dialog()
+		self.__gui_thread.open_disconnect_aux()
+		self.__gui_thread.bluetooth_error_dialog()
+
+
+
+if __name__ == '__main__':
+	app = App()
+	app.run()
+
