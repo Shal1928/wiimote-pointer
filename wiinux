@@ -30,7 +30,7 @@
 
 
 
-from GUI import *
+from Wiinux.GUI import *
 from Wiinux.WiimoteConnect import *
 from Wiinux.Config import mapped
 

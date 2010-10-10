@@ -117,7 +117,7 @@ class GUI(Thread):
 		frameimage = gtk.Frame()
 		frameimage.set_shadow_type(gtk.SHADOW_NONE)
 		image = gtk.Image()
-		image.set_from_file("Wiimote.png")
+		image.set_from_file(sys.prefix+"/share/Wiinux/bitmaps/Wiimote.png")
 		image.show()
 		frameimage.add(image)
 
@@ -285,6 +285,8 @@ class GUI(Thread):
 		self.windowplots.set_border_width(5)
 		self.windowplots.set_default_size(800, 600)
 		self.windowplots.set_title("Sensors")
+
+		print "HOLA"
 
 		self.x_angles = []
 		self.y_angles = []
