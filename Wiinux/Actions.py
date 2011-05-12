@@ -105,8 +105,5 @@ def positioning(width, height, root_window):
 
 		horiz = width-int((float(width)/623.000)*(ir['XT']-200))
 		vert = int((float(height)/750.000)*ir['YT'])
-		
-		#os.system("xte 'mousemove "	+ str(horiz) + " "
-		#					+ str(vert) + "'")
 
 		root_window.warp_pointer(horiz,vert)

@@ -132,14 +132,9 @@ class WiimoteConnect(Thread):
 
 				loop = 1
 				while s and not self.__finish_con:
-					#if loop == 2:
-					#	positioning(self.__geometry[2], self.__geometry[3], self.__root)
-					#	self.__display.sync()
-					#if loop == 50:
-					#	moving()
-					#	self.__parent_obj.notify_sensors(angles['X'], angles['Y'], angles['Z'],	ir['XT'], ir['YT'])
-					#	loop = 1
 
+					#moving()
+					self.__parent_obj.notify_sensors(angles['X'], angles['Y'], angles['Z'],	ir['XT'], ir['YT'])
 				
 					if s == '':
 						raise RuntimeError, 'Broken connection'
