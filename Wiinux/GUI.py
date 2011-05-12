@@ -286,8 +286,6 @@ class GUI(Thread):
 		self.windowplots.set_default_size(800, 600)
 		self.windowplots.set_title("Sensors")
 
-		print "HOLA"
-
 		self.x_angles = []
 		self.y_angles = []
 		self.z_angles = []
@@ -514,7 +512,7 @@ class GUI(Thread):
 		framecredits.add(vboxcredits)
 
 		# Create a Frame
-		framecontent = gtk.Frame("WIINUX.PY VERSION 1.0")
+		framecontent = gtk.Frame("WIINUX.PY VERSION 1.9")
 		# Set the style of the frame
 		framecontent.set_shadow_type(gtk.SHADOW_ETCHED_OUT)
 		framecontent.set_label_align(0.5, 0.0)
