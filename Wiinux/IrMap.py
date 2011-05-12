@@ -52,6 +52,6 @@ def ir_map(pos_byte, byte):
 		ir['Y2'] = 512*int(octet[0])+256*int(octet[1])+ir['Y2']
 		ir['S2'] = 8*int(octet[4])+4*int(octet[5])+2*int(octet[6])+int(octet[7])
 
-		ir['XT'] = (ir['X1']+ir['X2'])/2
-		ir['YT'] = (ir['Y1']+ir['Y2'])/2
+		ir['XT'] = (ir['X1']+ir['X2'])/2.
+		ir['YT'] = (ir['Y1']+ir['Y2'])/2.
 

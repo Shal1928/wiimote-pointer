@@ -32,6 +32,7 @@
 import bluetooth
 import time
 from threading import Thread
+import Xlib.display
 
 from Config import *
 from ButtonMap import *
@@ -45,6 +46,11 @@ class WiimoteConnect(Thread):
 		self.__parent_obj = parent_obj
 		self.__geometry = geometry
 		self.__finish_con = False
+		
+		self.__display = Xlib.display.Display()
+		self.__screen = self.__display.screen()
+		self.__root = self.__screen.root
+		
 		Thread.__init__(self)
 		
 	def run(self):
@@ -126,15 +132,19 @@ class WiimoteConnect(Thread):
 
 				loop = 1
 				while s and not self.__finish_con:
-					if loop == 2:
-						positioning(self.__geometry[2], self.__geometry[3])
-					if loop == 50:
-#						moving()
-						self.__parent_obj.notify_sensors(angles['X'], angles['Y'], angles['Z'],	ir['XT'], ir['YT'])
-						loop = 1
-					s = data_socket.recv(packet_size)
+					#if loop == 2:
+					#	positioning(self.__geometry[2], self.__geometry[3], self.__root)
+					#	self.__display.sync()
+					#if loop == 50:
+					#	moving()
+					#	self.__parent_obj.notify_sensors(angles['X'], angles['Y'], angles['Z'],	ir['XT'], ir['YT'])
+					#	loop = 1
+
+				
 					if s == '':
 						raise RuntimeError, 'Broken connection'
+
+
 
 					pos_byte = 1
 					for byte in s:
@@ -146,7 +156,11 @@ class WiimoteConnect(Thread):
 							ir_map(pos_byte,byte)
 						pos_byte = pos_byte + 1
 					pressing()
-					loop = loop + 1
+					positioning(self.__geometry[2], self.__geometry[3], self.__root)
+					self.__display.sync()
+
+					s = data_socket.recv(packet_size)
+					#loop = loop + 1
 
 			else:
 				# Could not find Wiimote nearby

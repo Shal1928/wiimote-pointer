@@ -34,12 +34,12 @@ from Wiinux.GUI import *
 from Wiinux.WiimoteConnect import *
 from Wiinux.Config import mapped
 
-class App():
+class App:
 
 	def __init__(self):
 		self.__gui_thread = None
 		self.__con_thread = None
-
+		
 	def run(self):
 		# Launch the GUI
 		self.__gui_thread = GUI(self)

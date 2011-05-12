@@ -27,8 +27,6 @@
 # @contact:      a.torrado@alumnos.urjc.es
 #
 
-
-
 import os
 
 from Config import buttons
@@ -102,8 +100,13 @@ def pressing():
 	if (buttons['R']['pressed'] == False) and (buttons['R']['state'] == True):
 		os.system("xte 'keyup " + mapped['R'] + "'")
 
-def positioning(width, height):
+def positioning(width, height, root_window):
 	if (ir['XT'] > 200 and ir['XT'] < 823 and ir['YT'] > 0 and ir['YT'] < 750):
-		os.system("xte 'mousemove "	+ str(width-int((float(width)/623.000)*(ir['XT']-200))) + " "
-							+ str(int((float(height)/750.000)*ir['YT'])) + "'")
 
+		horiz = width-int((float(width)/623.000)*(ir['XT']-200))
+		vert = int((float(height)/750.000)*ir['YT'])
+		
+		#os.system("xte 'mousemove "	+ str(horiz) + " "
+		#					+ str(vert) + "'")
+
+		root_window.warp_pointer(horiz,vert)
