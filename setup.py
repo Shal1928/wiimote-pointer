@@ -30,17 +30,17 @@ Installer
 @contact:      a.torrado@alumnos.urjc.es
 """
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(name = "Wiinux",
       version = "1.0",
+      packages = find_packages(),
       author = "Ángel Torrado Carvajal",
       author_email = "a.torrado@alumnos.urjc.es",
       description = "Low cost virtual laser pointer and whiteboard using a Wiimote",
       long_description = "",
       url = "http://code.google.com/p/wiimote-pointer/",
       platforms = ["any"],
-      packages = ["Wiinux"],
       scripts = ["wiinux"],
       data_files = [('share/Wiinux/bitmaps',['share/Wiinux/bitmaps/Wiimote.png'])],
-      requires = ["matplotlib","pygtk","bluetooth"])
+      requires = ["matplotlib","pygtk","bluetooth","Xlib"])
