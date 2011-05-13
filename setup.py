@@ -32,7 +32,7 @@ Installer
 
 from setuptools import setup, find_packages
 
-setup(name = "Wiinux",
+setup(name = "wiinux",
       version = "1.9",
       packages = find_packages(),
       author = "Ángel Torrado Carvajal",
