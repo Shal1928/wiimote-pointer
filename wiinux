@@ -30,9 +30,9 @@
 
 
 
-from wiinux.GUI import *
-from wiinux.WiimoteConnect import *
-from wiinux.Config import mapped
+from pywiinux.GUI import *
+from pywiinux.WiimoteConnect import *
+from pywiinux.Config import mapped
 
 class App:
 
