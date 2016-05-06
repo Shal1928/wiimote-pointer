@@ -1,0 +1,1 @@
+Low cost virtual laser pointer and whiteboard using a Wiimote.
